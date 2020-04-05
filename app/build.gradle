@@ -2,6 +2,7 @@ plugins {
     id('com.android.application')
     id('com.getkeepsafe.dexcount')
     id('com.github.triplet.play') version '2.3.0' apply false
+    id('jacoco')
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -75,14 +76,15 @@ android {
             // de.danoeh.antennapod.PodcastApp to extend MultiDexApplication . 
             // See Issue #2813
             multiDexEnabled true
-            
+
             dexcount {
                 if (project.hasProperty("enableDexcountInDebug")) {
                     runOnEachPackage enableDexcountInDebug.toBoolean()
                 } else { // default to not running dexcount
-                    runOnEachPackage false                 
+                    runOnEachPackage false
                 }
             }
+            testCoverageEnabled true
         }
         release {
             resValue "string", "provider_authority", "de.danoeh.antennapod.provider"
